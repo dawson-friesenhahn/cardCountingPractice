@@ -10,16 +10,22 @@ CARD_NUM_TO_CARD_NAME = {1: "ace", 2: "2", 3: "3", 4: "4", 5: "5", 6: "6", 7: "7
 
 
 class Card:
-    def __init__(self, suit, num):
+    def __init__(self, suit, num, show_back= False):
         self.suit= suit
         self.num= num
+        self.show_back= show_back
 
     def getFullName(self):
-        return CARD_NUM_TO_CARD_NAME[self.num] + "_of_" + str(self.suit.name).lower()
+        if self.show_back:
+            return "back_of_card"
+        else:
+            return CARD_NUM_TO_CARD_NAME[self.num] + "_of_" + str(self.suit.name).lower()
+    
+    def __str__(self):
+        return CARD_NUM_TO_CARD_NAME[self.num] + " of " + str(self.suit.name).lower()
         
 
     
 if __name__ == "__main__":
     x= Card(Suit.HEARTS, 12)
     print(x.getFullName())
-    print(Suit.keys())
