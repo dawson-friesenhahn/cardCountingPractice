@@ -17,24 +17,24 @@ class Blackjack:
         
         self.root= root
         
-        self.player_frame= tk.Frame(self.root, width=100, height=100, bg="green")
-        self.player_frame.grid(row=1, column=0)
+        self.player_frame= tk.Frame(self.root, bg="green")
+        self.player_frame.place(relx=0, rely=0.6, relwidth=0.6, relheight=0.3)
         self.showPlayerTotal= True
         self.playerTotalLabel= ttk.Button(root, text="Player Total: ", command= self.togglePlayerHandTotalLabel)
-        self.playerTotalLabel.grid(row=1, column=2)
+        self.playerTotalLabel.place(relx=0.6, rely=0.6, relwidth=0.2, relheight=0.05)
 
-        self.dealer_frame= tk.Frame(self.root, width= 100, height= 100, bg="green")
-        self.dealer_frame.grid(row=0, column=0)
+        self.dealer_frame= tk.Frame(self.root, bg="green")
+        self.dealer_frame.place(relx=0, rely=0, relwidth=0.6, relheight=0.4)
         self.dealerDownCardTk= None
         self.dealerDownCard= None
 
         self.hitButton= ttk.Button(root, text="Hit", command=self.hit)
         self.hitButton["state"] = "disabled"
-        self.hitButton.grid(column=0, row=2)
+        self.hitButton.place(relx=0, rely=0.9, relwidth=0.1, relheight=0.1)
         self.standButton= ttk.Button(root, text="Stand", command=self.stand)
-        self.standButton.grid(column=1, row=2)
+        self.standButton.place(relx=0.1, rely=0.9, relwidth=0.1, relheight=0.1)
         self.dealButton= ttk.Button(root, text= "Deal", command=self.deal)
-        self.dealButton.grid(column=2, row= 2) 
+        self.dealButton.place(relx=0.2, rely=0.9, relwidth=0.1, relheight=0.1) 
 
         self.photo_images= []
 
@@ -148,7 +148,7 @@ class Blackjack:
 def main():
     root = tk.Tk()
     root.title("BlackJack!")
-    main_frame = tk.Frame(root, width=1000, height=1000, bg='green')
+    main_frame = tk.Frame(root, width=500, height=500, bg='green')
     main_frame.pack(fill=tk.BOTH, expand=True)
     bj= Blackjack(main_frame)
     
