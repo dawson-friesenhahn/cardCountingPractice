@@ -17,13 +17,13 @@ class Blackjack:
         
         self.root= root
         
-        self.player_frame= ttk.Frame(self.root, width=100, height=100, padding=10)
+        self.player_frame= tk.Frame(self.root, width=100, height=100, bg="green")
         self.player_frame.grid(row=1, column=0)
         self.showPlayerTotal= True
         self.playerTotalLabel= ttk.Button(root, text="Player Total: ", command= self.togglePlayerHandTotalLabel)
         self.playerTotalLabel.grid(row=1, column=2)
 
-        self.dealer_frame= ttk.Frame(self.root, width= 100, height= 100, padding= 10)
+        self.dealer_frame= tk.Frame(self.root, width= 100, height= 100, bg="green")
         self.dealer_frame.grid(row=0, column=0)
         self.dealerDownCardTk= None
         self.dealerDownCard= None
@@ -57,10 +57,18 @@ class Blackjack:
         self.root.update()
         return tkCard
 
+    def removeChildren(self, widget):
+        for child in widget.winfo_children():
+            child.destroy()
+
     def deal(self):
         self.photo_images.clear()
         self.dealerHand.clear()
         self.playerHand.clear()
+
+        self.removeChildren(self.player_frame)
+        self.removeChildren(self.dealer_frame)
+
         
         
         #deal two to main player first
@@ -103,16 +111,26 @@ class Blackjack:
         parent_width = frame.winfo_width()
         parent_height = frame.winfo_height()
 
-        print(f"Parent width, height: {parent_width}, {parent_height}")
+        #print(f"Parent width, height: {parent_width}, {parent_height}")
         aspect_ratio = img.width / img.height
-        if parent_width / aspect_ratio < parent_height:
-            new_width = int(parent_width)
-            new_height = int(new_width / aspect_ratio)
-        else:
-            new_height = int(parent_height)
-            new_width = int(new_height * aspect_ratio)
+        # if parent_width / aspect_ratio < parent_height:
+        #     new_width = int(parent_width)
+        #     new_height = int(new_width / aspect_ratio)
+        # else:
+        #     new_height = int(parent_height)
+        #     new_width = int(new_height * aspect_ratio)
 
-        print(f"w: {new_width}, h:{new_height}")
+        # print(f"w: {new_width}, h:{new_height}")
+        new_width= img.width
+        new_height= img.height
+        if aspect_ratio < 1: #height is greater than width
+            new_height= 100
+            new_width= int(100 * aspect_ratio)
+        else:
+            new_width= 100
+            new_height = int(100/aspect_ratio)
+        
+
         img = img.resize((new_width, new_height), Image.ANTIALIAS)
 
         return ImageTk.PhotoImage(img)
@@ -130,9 +148,10 @@ class Blackjack:
 def main():
     root = tk.Tk()
     root.title("BlackJack!")
-    bj= Blackjack(root)
-    frm= ttk.Frame(root, padding=10)
-    frm.grid()
+    main_frame = tk.Frame(root, width=1000, height=1000, bg='green')
+    main_frame.pack(fill=tk.BOTH, expand=True)
+    bj= Blackjack(main_frame)
+    
     
     root.mainloop()
     
