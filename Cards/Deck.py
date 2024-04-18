@@ -6,6 +6,7 @@ class Deck:
         self.cards= []
         self.shuffleThreshold = shuffleThreshold
         self.num_decks= num_decks
+        self.running_count= 0
         self.initialize_new_cards()
 
     def initialize_new_cards(self):
@@ -13,6 +14,7 @@ class Deck:
             for suit in range(4):
                 for num in range(1, 14):
                     self.cards.append(Card(Suit(suit), num))
+        self.running_count= 0
         self.shuffle()
         
     def shuffle(self):
@@ -20,14 +22,20 @@ class Deck:
 
     def draw(self):
         try:
-            return self.cards.pop()
+            new_card= self.cards.pop()
         except:
             print("Deck was empty! shuffling...")
             self.initialize_new_cards()
-            return self.cards.pop()
+            new_card= self.cards.pop()
+        self.running_count += new_card.getHighLow()
+        print(f"Running Count: {self.running_count}")
+        return new_card
     
     def getRemainingCards(self):
         return len(self.cards)
+    
+    def getRemainingDecks(self):
+        return self.getRemainingCards() / (self.num_decks * 52)
     
 
 if __name__ == "__main__":
